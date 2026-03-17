@@ -125,16 +125,7 @@ Next, I tested whether the missingness depends on `CLIMATE.CATEGORY`. The permut
 
 These results suggest that the missingness of `CUSTOMERS.AFFECTED` is unlikely to be Missing Completely At Random (MCAR). Instead, it is more consistent with a Missing At Random (MAR) mechanism, where the probability of missingness depends on other observed variables such as outage duration.
 
-<iframe
-  src="assets/missness.html"
-  width="800"
-  height="600"
-  frameborder="0"
-></iframe>
-
-Next, I conducted a permutation test to evaluate whether the difference in average outage duration between the two sets of locations was by chance. First, the actual difference in the means of outage durations was computed. Then, the missing indicator was randomly permuted 1000 times, and the difference of the means was recalculated for each permutation.
-
-The p-value obtained was close to 0.0. Because this is lower than the widely accepted alpha level of 0.05, it can be concluded that the missingness of CUSTOMERS.AFFECTED is dependent on the length of the outage and that the missed values could be considered nonrandom and conditionally dependent on certain factors of the outage.
+<iframe src="assets/missness.html" width="800" height="600" frameborder="0"></iframe>
 
 ## Step 4: Hypothesis Testing
 
