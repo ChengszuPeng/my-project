@@ -79,7 +79,7 @@ appear to be associated with longer outage durations compared to other causes.
 The following table summarizes the **average outage duration grouped by 
 cause category**.
 
-![Average Outage Duration by Cause](Interesting Aggregate Table.png)
+![Average Outage Duration by Cause](InterestingAggregateTable.png)
 
 From this table we observe that **fuel supply emergencies lead to the 
 longest outages on average**, followed by severe weather events. Other 
