@@ -155,7 +155,7 @@ The observed difference in mean outage duration is approximately **41.28 hours**
 The resulting p-value is approximately **0.0**.
 
 **Conclusion:**  
-Since the p-value is smaller than 0.05, I reject the null hypothesis. This provides evidence that outages caused by severe weather have a different average outage duration than outages caused by other causes. In the sample, severe weather outages last longer on average.
+Since the p-value is smaller than 0.05, due to this I reject the null hypothesis. This shows the evidence that outages caused by severe weather have a different average outage duration than outages caused by other causes. In the sample, severe weather outages last longer on average.
 
 ### Permutation Test Visualization
 
@@ -166,7 +166,7 @@ height="600"
 frameborder="0"
 ></iframe>
 
-The histogram above shows the permutation distribution of the test statistic under the null hypothesis. The red vertical line marks the observed difference in mean outage duration. Since the observed statistic lies far in the right tail of the null distribution, the resulting p-value is extremely small.
+The plots above show the permutation distribution of the test statistic under the null hypothesis. The red vertical line shows the observed difference in mean outage duration. Since the observed statistic lies far in the right tail of the null distribution, the resulting p-value will be small.
 
 ## Framing a Prediction Problem
 
