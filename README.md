@@ -143,3 +143,24 @@ Since the p-value is smaller than 0.05, we reject the null hypothesis. This sugg
 The histogram above shows the distribution of simulated test statistics under the null hypothesis.  
 The red vertical line represents the observed difference in mean outage duration.  
 Since the observed statistic lies far in the tail of the distribution, this leads to a very small p-value.
+
+## Step 5: Framing a Prediction Problem
+
+### Prediction Problem
+
+The goal of this prediction task is to determine whether a power outage will last longer than **24 hours**.
+
+This is a **binary classification problem**, where the response variable is **`LONG_OUTAGE`**.
+
+- `LONG_OUTAGE = 1` indicates the outage duration exceeds 24 hours.
+- `LONG_OUTAGE = 0` indicates the outage duration is 24 hours or less.
+
+This threshold was chosen because outages lasting more than a full day can cause significant disruption to infrastructure systems, businesses, and daily life.
+
+### Evaluation Metric
+
+The model will be evaluated using **F1-score**. Since long outages are less common than shorter outages, the dataset is somewhat imbalanced. Accuracy alone could therefore be misleading, as a model that always predicts short outages might still achieve a high accuracy. The F1-score balances **precision and recall**, making it a more appropriate metric for evaluating performance on this classification problem.
+
+### Time of Prediction
+
+At the time of prediction, we assume that we know information about the outage **cause, time, location, and environmental conditions**, but we do **not yet know the outage duration**. Therefore, the model will only use features that would realistically be available when the outage begins. Variables that depend on the actual outage duration will not be used as predictors.
