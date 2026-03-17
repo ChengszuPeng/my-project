@@ -7,4 +7,33 @@
     <h1>Understanding Power Outage Severity in the United States</h1>
     
 </body>
+    <h2>Step 1: Introduction</h2>
+    
+    <p>
+    Power outage is a major threat to the infrastructure systems of the world. Power outage can affect the transport system, communication system, medical system, business sector and normal daily life of people. Power is a critical resource and understanding which factors leads to massive power outage can be a huge task. While looking at the past power outage data, we may even think about how to extract some information from it concerning trends that will be useful to utility firms and depending on governments regarding how to deal with the power outage.
+    </p>
+    
+    <p>
+    I do an analysis in the current project on the power outages events that occurred at a large scale in the US. The dataset that I carryout analysis on has a number of 1534 rows where each single row is a once occurrence failure. The dataset includes the causes, location and time of the outages. It has additional features that include the number of customers that were affected from the outages and severity of the outage. Among the other outage factors, the number of customers that suffered from the outages and the loss of the demand equivalent of the electricity are some of them.
+    </p>
+    
+    <p>
+    The central question of this project is:
+    </p>
+    
+    <p>
+    <b>Can we predict whether a power outage will become a long outage based on information about the outage’s cause, time, location, and impact?</b>
+    </p>
+    
+    <p>
+    This question matters because extended outages can have serious costs and safety impacts to the affected areas. If the outage duration can be determined early in the life of the outage, the utility may be able to provide crews and other resources to help mitigate those impacts.
+    </p>
+    
+    <p>
+    There are multiple relevant parameters, considering this dataset. <b>CAUSE.CATGORY</b> gives you the information about the reason of the outage: bad weather, technical problems, fuel delivery failure etc. <b>MONTH</b> variable reflects the outage date and can reveal some seasonal patterns: for example severe weather conditions, rise of temperatures or typhons can occur during certain months. <b>U.S._STATE</b> is the state of the outage and is associated with geographical factors, which may also influence the climate and infrastructure in particular locations. Finally, <b>DEMAND.LOSS.MW</b> and <b>CUSTOMERS.AFFECTED</b> reflect the Outage size and can be seen as a metrics of its severity.
+    </p>
+    
+    <p>
+    These variables will be incorporated into predictive models that will project long outages.
+    </p>
 </html>
