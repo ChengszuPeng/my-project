@@ -90,20 +90,18 @@ shorter outages.
 
 ### MNAR Analysis
 
-`CUSTOMERS.AFFECTED` is one of the columns that has the most missing values in the dataset. We can suppose that `CUSTOMERS.AFFECTED` might be **MNAR (Missing Not At Random)**. In real-life outage scenarios, not all cases may report the number of customers affected. For example, during severe storms or emergency situations, utility companies may focus on restoring power rather than recording detailed statistics. In these situations, the missing values could be related to the severity of the outage or the circumstances surrounding it.
+CUSTOMERS.AFFECTED is one of the columns that has the most missing values in the datasets. We can suppose that CUSTOMERS.AFFECTED might be MNAR. In real-life outage scenarios, not all cases might have a number of customers affected. As an example, in cases of a powerful storm or any other emergency, the utility companies fix the outage and do not occupy themselves with statistics. In these particular cases, the missing data can be said to be associated with the severity of the outage or the circumstances surrounding it.
 
-If additional contextual information were available, such as utility reporting records or more detailed operational data about outage events, we might better understand the reason behind these missing values. With this additional information, we could determine whether the missingness is truly MNAR or whether it could instead be explained by other observed variables, which would make the data closer to MAR (Missing At Random).
-
----
+If we had more contextual data, for example, utility reporting data or additional details about what actually happened in the field, we could potentially understand more about the missing values. With such contextual data, we would be in a position to assess the degree of MNAR versus MAR.
 
 ### Missingness Dependency
 
-To investigate whether the missingness of `CUSTOMERS.AFFECTED` depends on other variables, I created a boolean indicator column called `CUST_MISSING`, which indicates whether the value in `CUSTOMERS.AFFECTED` is missing.
+In order to investigate the dependence of the missingness of CUSTOMERS.AFFECTED on other variables, I generated a boolean indicator column, CUST_MISSING, to denote whether the value in CUSTOMERS.AFFECTED is missing.
 
-I then compared outage durations for events where `CUSTOMERS.AFFECTED` is missing and where it is not missing. The plot below shows the distribution of outage durations for these two groups.
+I compared the length of outages for instances when CUSTOMERS.AFFECTED is null vs when it is not null. The plot below shows the density of outages when CUSTOMERS.AFFECTED is null compared to when it is not null.
 
 ![Missingness Plot](images/missingness_plot.png)
 
-Next, I conducted a **permutation test** to determine whether the difference in average outage duration between the two groups occurred by chance. First, the observed difference in the mean outage duration was calculated. Then, the missingness indicator was randomly permuted 1000 times, and the difference in means was recomputed for each permutation.
+Next, I conducted a permutation test to evaluate whether the difference in average outage duration between the two sets of locations was by chance. First, the actual difference in the means of outage durations was computed. Then, the missing indicator was randomly permuted 1000 times, and the difference of the means was recalculated for each permutation.
 
-The resulting **p-value was approximately 0.027**. Since this value is below the common significance threshold of 0.05, it suggests that the missingness of `CUSTOMERS.AFFECTED` is related to outage duration. This indicates that the missing values may not be completely random and could depend on characteristics of the outage event.
+The p-value obtained was close to 0.027. Because this is lower than the widely accepted alpha level of 0.05, it can be concluded that the missingness of CUSTOMERS.AFFECTED is dependent on the length of the outage and that the missed values could be considered nonrandom and conditionally dependent on certain factors of the outage.
