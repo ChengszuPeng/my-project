@@ -1,6 +1,6 @@
 # Understanding Power Outage Severity in the United States
 
-## Step 1: Introduction
+## Introduction
 
 Power outage is a major threat to the infrastructure systems of the world. Power outage can affect the transport system, communication system, medical system, business sector and normal daily life of people.
 
