@@ -192,3 +192,113 @@ The baseline logistic regression model achieves an **F1-score of approximately 0
 ### Interpretation
 
 This baseline model provides a simple reference point for predicting long outages. While the model captures some information from outage cause and timing, the performance suggests that additional features may help improve prediction accuracy. Therefore, more informative predictors will be explored in the final model.
+
+## Step 7: Final Model
+
+### Additional Features
+
+To improve upon the baseline model, I constructed a final model that incorporates additional modeling improvements.
+
+The baseline model used the following features:
+- **CAUSE.CATEGORY** (categorical, nominal): the cause of the outage.
+- **MONTH** (numeric / ordinal): the month in which the outage occurred.
+
+These features capture some basic information about outages, but additional modeling improvements can help the model better identify patterns associated with long outages.
+
+### Model Choice
+
+The final model uses **logistic regression**, since the prediction task is a **binary classification problem** where the goal is to predict whether an outage lasts longer than 24 hours.
+
+Logistic regression is appropriate for this task because it provides an interpretable probabilistic model while still being able to incorporate encoded categorical variables.
+
+### Hyperparameter Tuning
+
+To improve the model, I tuned the **regularization strength parameter `C`** of the logistic regression model.
+
+Hyperparameter tuning was performed using **GridSearchCV** with 5-fold cross-validation and **F1-score** as the evaluation metric.
+
+The following candidate values were tested:
+C = [0.01, 0.1, 1, 10, 100]
+The best performing hyperparameter value found was:
+C = 100
+
+### Model Performance
+
+The model performance is evaluated using **F1-score**, since the dataset contains more short outages than long outages and F1-score balances precision and recall.
+
+| Model | F1 Score |
+|------|------|
+| Baseline Model | 0.593 |
+| Final Model | 0.694 |
+
+### Interpretation
+
+The final model improves the F1-score from **0.593 to 0.694**, indicating that the tuned model is better at identifying long outages while maintaining a balance between precision and recall.
+
+This improvement suggests that hyperparameter tuning helps the model better capture relationships between outage causes, seasonal timing, and outage duration.
+
+## Step 8: Fairness Analysis
+
+To evaluate whether the final model performs differently across outage causes, I conducted a fairness analysis comparing prediction performance for outages caused by **severe weather** versus outages caused by **other factors**.
+
+### Groups
+
+The two groups were defined as:
+
+- **Group X:** outages caused by **severe weather**
+- **Group Y:** outages caused by **all other causes**
+
+These groups were created using the `CAUSE.CATEGORY` column.
+
+### Evaluation Metric
+
+The evaluation metric used for the fairness analysis is **classification accuracy**, which measures the proportion of correct predictions.
+
+### Observed Difference
+
+The observed accuracies were:
+
+- Accuracy for **severe weather outages:** 0.718  
+- Accuracy for **other outages:** 0.932  
+
+Observed difference:
+Accuracy(severe weather) − Accuracy(other causes) = −0.214
+
+
+This indicates that the model performs worse when predicting outages caused by severe weather.
+
+### Hypotheses
+
+**Null Hypothesis (H₀):**  
+The model performs equally well for severe weather outages and other outages. Any observed difference in accuracy is due to random chance.
+
+**Alternative Hypothesis (H₁):**  
+The model performs differently for severe weather outages compared to other outages.
+
+### Permutation Test
+
+To test this hypothesis, I performed a **permutation test with 1000 simulations**.
+
+During each simulation:
+
+1. The group labels (`SEVERE`) were randomly shuffled.
+2. The difference in accuracy between the two groups was recomputed.
+3. This produced a distribution of simulated differences under the null hypothesis.
+
+The p-value was computed as the proportion of simulated differences with magnitude greater than or equal to the observed difference.
+
+### Results
+
+The permutation test produced a **p-value ≈ 0.0**.
+
+Since this p-value is far below the typical significance level of **α = 0.05**, we reject the null hypothesis.
+
+### Conclusion
+
+The results suggest that the model performs significantly differently for outages caused by severe weather compared to outages caused by other causes.
+
+Specifically, the model appears to be **less accurate when predicting outages caused by severe weather**, indicating that the model may have fairness limitations across different outage causes.
+
+The visualization below shows the permutation distribution of accuracy differences, with the observed difference marked by the red line.
+
+![Permutation Test Distribution](images/fairness_test.png)
