@@ -39,7 +39,7 @@ restoration times when necessary.
 
 The following plot shows the distribution of outage duration in hours.
 
-![Outage Duration Distribution](Univariate1.png)
+![Outage Duration Distribution](images/Univariate1.png)
 
 Most outages are relatively short in duration, but the distribution has a 
 long right tail indicating that a small number of outages last for very 
@@ -47,7 +47,7 @@ long periods.
 
 The next plot shows the distribution of the number of customers affected.
 
-![Customers Affected Distribution](Univariate2.png)
+![Customers Affected Distribution](images/Univariate2.png)
 
 This distribution is also heavily right-skewed, suggesting that most outages 
 affect relatively small numbers of customers while a few events impact very 
@@ -60,14 +60,14 @@ large populations.
 The following plot examines the relationship between outage duration and 
 climate category.
 
-![Outage Duration by Climate Category](Bivariate1.png)
+![Outage Duration by Climate Category](images/Bivariate1.png)
 
 Although most outages remain short across all climates, colder climates 
 appear to show slightly more variability in outage duration.
 
 Another comparison examines outage duration across different outage causes.
 
-![Outage Duration by Cause Category](Bivariate2.png)
+![Outage Duration by Cause Category](images/Bivariate2.png)
 
 Certain outage causes such as **fuel supply emergencies** and **severe weather**
 appear to be associated with longer outage durations compared to other causes.
@@ -79,7 +79,7 @@ appear to be associated with longer outage durations compared to other causes.
 The following table summarizes the **average outage duration grouped by 
 cause category**.
 
-![Average Outage Duration by Cause](InterestingAggregateTable.png)
+![Average Outage Duration by Cause](images/InterestingAggregateTable.png)
 
 From this table we observe that **fuel supply emergencies lead to the 
 longest outages on average**, followed by severe weather events. Other 
