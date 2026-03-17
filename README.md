@@ -105,3 +105,41 @@ I compared the length of outages for instances when CUSTOMERS.AFFECTED is null v
 Next, I conducted a permutation test to evaluate whether the difference in average outage duration between the two sets of locations was by chance. First, the actual difference in the means of outage durations was computed. Then, the missing indicator was randomly permuted 1000 times, and the difference of the means was recalculated for each permutation.
 
 The p-value obtained was close to 0.027. Because this is lower than the widely accepted alpha level of 0.05, it can be concluded that the missingness of CUSTOMERS.AFFECTED is dependent on the length of the outage and that the missed values could be considered nonrandom and conditionally dependent on certain factors of the outage.
+
+## Step 4: Hypothesis Testing
+
+### Hypothesis Test
+
+I test whether outages caused by severe weather tend to last longer than outages caused by other causes.
+
+**Null Hypothesis (H₀):**  
+The average outage duration is the same for outages caused by severe weather and outages caused by other causes.
+
+**Alternative Hypothesis (H₁):**  
+Outages caused by severe weather have a different average outage duration than outages caused by other causes.
+
+**Test Statistic:**  
+Difference in mean outage duration between severe weather outages and non-severe weather outages.
+
+**Significance Level:**  
+α = 0.05
+
+**Method:**  
+Permutation test with 1000 simulations.
+
+**Observed Statistic:**  
+≈ 41.28 hours
+
+**P-value:**  
+≈ 0.0
+
+**Conclusion:**  
+Since the p-value is smaller than 0.05, we reject the null hypothesis. This suggests that outages caused by severe weather tend to have longer outage durations than outages caused by other causes.
+
+### Permutation Test Visualization
+
+![Permutation Test Distribution](images/permutation_test.png)
+
+The histogram above shows the distribution of simulated test statistics under the null hypothesis.  
+The red vertical line represents the observed difference in mean outage duration.  
+Since the observed statistic lies far in the tail of the distribution, this leads to a very small p-value.
