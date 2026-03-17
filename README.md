@@ -114,19 +114,16 @@ longest outages on average**, followed by severe weather events. Other
 causes such as islanding or intentional attacks tend to result in much 
 shorter outages.
 
-## Step 3: Assessment of Missingness
-
-### MNAR Analysis
-
-CUSTOMERS.AFFECTED is one of the columns that has the most missing values in the datasets. We can suppose that CUSTOMERS.AFFECTED might be MNAR. In real-life outage scenarios, not all cases might have a number of customers affected. As an example, in cases of a powerful storm or any other emergency, the utility companies fix the outage and do not occupy themselves with statistics. In these particular cases, the missing data can be said to be associated with the severity of the outage or the circumstances surrounding it.
-
-If we had more contextual data, for example, utility reporting data or additional details about what actually happened in the field, we could potentially understand more about the missing values. With such contextual data, we would be in a position to assess the degree of MNAR versus MAR.
 
 ### Missingness Dependency
 
-In order to investigate the dependence of the missingness of CUSTOMERS.AFFECTED on other variables, I generated a boolean indicator column, CUST_MISSING, to denote whether the value in CUSTOMERS.AFFECTED is missing.
+To investigate the missingness mechanism of `CUSTOMERS.AFFECTED`, I created a missingness indicator (`CUST_MISSING`) and performed permutation tests to determine whether the missingness depends on other variables.
 
-I compared the length of outages for instances when CUSTOMERS.AFFECTED is null vs when it is not null. The plot below shows the density of outages when CUSTOMERS.AFFECTED is null compared to when it is not null.
+First, I tested whether the missingness of `CUSTOMERS.AFFECTED` depends on `OUTAGE.DURATION.HOURS`. The permutation test produced a very small p-value (p < 0.001), indicating that outages with longer durations are more likely to have missing customer impact information.
+
+Next, I tested whether the missingness depends on `CLIMATE.CATEGORY`. The permutation test produced a p-value of 0.316, which is greater than the significance level of 0.05. This suggests that there is no strong evidence that the missingness depends on climate category.
+
+These results suggest that the missingness of `CUSTOMERS.AFFECTED` is unlikely to be Missing Completely At Random (MCAR). Instead, it is more consistent with a Missing At Random (MAR) mechanism, where the probability of missingness depends on other observed variables such as outage duration.
 
 <iframe
   src="assets/missness.html"
