@@ -85,3 +85,25 @@ From this table we observe that **fuel supply emergencies lead to the
 longest outages on average**, followed by severe weather events. Other 
 causes such as islanding or intentional attacks tend to result in much 
 shorter outages.
+
+## Step 3: Assessment of Missingness
+
+### MNAR Analysis
+
+`CUSTOMERS.AFFECTED` is one of the columns that has the most missing values in the dataset. We can suppose that `CUSTOMERS.AFFECTED` might be **MNAR (Missing Not At Random)**. In real-life outage scenarios, not all cases may report the number of customers affected. For example, during severe storms or emergency situations, utility companies may focus on restoring power rather than recording detailed statistics. In these situations, the missing values could be related to the severity of the outage or the circumstances surrounding it.
+
+If additional contextual information were available, such as utility reporting records or more detailed operational data about outage events, we might better understand the reason behind these missing values. With this additional information, we could determine whether the missingness is truly MNAR or whether it could instead be explained by other observed variables, which would make the data closer to MAR (Missing At Random).
+
+---
+
+### Missingness Dependency
+
+To investigate whether the missingness of `CUSTOMERS.AFFECTED` depends on other variables, I created a boolean indicator column called `CUST_MISSING`, which indicates whether the value in `CUSTOMERS.AFFECTED` is missing.
+
+I then compared outage durations for events where `CUSTOMERS.AFFECTED` is missing and where it is not missing. The plot below shows the distribution of outage durations for these two groups.
+
+![Missingness Plot](images/missingness_plot.png)
+
+Next, I conducted a **permutation test** to determine whether the difference in average outage duration between the two groups occurred by chance. First, the observed difference in the mean outage duration was calculated. Then, the missingness indicator was randomly permuted 1000 times, and the difference in means was recomputed for each permutation.
+
+The resulting **p-value was approximately 0.027**. Since this value is below the common significance threshold of 0.05, it suggests that the missingness of `CUSTOMERS.AFFECTED` is related to outage duration. This indicates that the missing values may not be completely random and could depend on characteristics of the outage event.
