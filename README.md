@@ -99,7 +99,15 @@ appear to be associated with longer outage durations compared to other causes.
 The following table summarizes the **average outage duration grouped by 
 cause category**.
 
-![Average Outage Duration by Cause](images/InterestingAggregateTable.png)
+| Cause Category | Average Outage Duration (Hours) |
+|----------------|--------------------------------|
+| fuel supply emergency | 223.58 |
+| severe weather | 62.19 |
+| equipment failure | 25.75 |
+| public appeal | 21.22 |
+| system operability disruption | 10.73 |
+| intentional attack | 6.13 |
+| islanding | 3.27 |
 
 From this table we observe that **fuel supply emergencies lead to the 
 longest outages on average**, followed by severe weather events. Other 
