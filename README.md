@@ -131,7 +131,7 @@ Permutation test with 1000 simulations.
 ≈ 41.28 hours
 
 **P-value:**  
-≈ 0.0
+≈ 0.027
 
 **Conclusion:**  
 Since the p-value is smaller than 0.05, we reject the null hypothesis. This suggests that outages caused by severe weather tend to have longer outage durations than outages caused by other causes.
