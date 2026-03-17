@@ -39,7 +39,12 @@ restoration times when necessary.
 
 The following plot shows the distribution of outage duration in hours.
 
-![Outage Duration Distribution](images/Univariate1.png)
+<iframe
+  src="assets/outage_duration_distribution.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
 
 Most outages are relatively short in duration, but the distribution has a 
 long right tail indicating that a small number of outages last for very 
@@ -47,7 +52,12 @@ long periods.
 
 The next plot shows the distribution of the number of customers affected.
 
-![Customers Affected Distribution](images/Univariate2.png)
+<iframe
+  src="assets/customers_affected_distribution.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
 
 This distribution is also heavily right-skewed, suggesting that most outages 
 affect relatively small numbers of customers while a few events impact very 
@@ -60,14 +70,24 @@ large populations.
 The following plot examines the relationship between outage duration and 
 climate category.
 
-![Outage Duration by Climate Category](images/Bivariate1.png)
+<iframe
+  src="assets/climatecategory_outageduration.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
 
 Although most outages remain short across all climates, colder climates 
 appear to show slightly more variability in outage duration.
 
 Another comparison examines outage duration across different outage causes.
 
-![Outage Duration by Cause Category](images/Bivariate2.png)
+<iframe
+  src="assets/Cause_Category_Outage_Duration.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
 
 Certain outage causes such as **fuel supply emergencies** and **severe weather**
 appear to be associated with longer outage durations compared to other causes.
@@ -100,7 +120,12 @@ In order to investigate the dependence of the missingness of CUSTOMERS.AFFECTED 
 
 I compared the length of outages for instances when CUSTOMERS.AFFECTED is null vs when it is not null. The plot below shows the density of outages when CUSTOMERS.AFFECTED is null compared to when it is not null.
 
-![Missingness Plot](images/missingness_plot.png)
+<iframe
+  src="assets/missness.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
 
 Next, I conducted a permutation test to evaluate whether the difference in average outage duration between the two sets of locations was by chance. First, the actual difference in the means of outage durations was computed. Then, the missing indicator was randomly permuted 1000 times, and the difference of the means was recalculated for each permutation.
 
@@ -110,13 +135,13 @@ The p-value obtained was close to 0.027. Because this is lower than the widely a
 
 ### Hypothesis Test
 
-I test whether outages caused by severe weather tend to last longer than outages caused by other causes.
+I test whether outages caused by severe weather tend to have different average outage durations than outages caused by other causes.
 
 **Null Hypothesis (H₀):**  
 The average outage duration is the same for outages caused by severe weather and outages caused by other causes.
 
 **Alternative Hypothesis (H₁):**  
-Outages caused by severe weather have a different average outage duration than outages caused by other causes.
+The average outage duration is different for outages caused by severe weather and outages caused by other causes.
 
 **Test Statistic:**  
 Difference in mean outage duration between severe weather outages and non-severe weather outages.
@@ -128,21 +153,24 @@ Difference in mean outage duration between severe weather outages and non-severe
 Permutation test with 1000 simulations.
 
 **Observed Statistic:**  
-≈ 41.28 hours
+The observed difference in mean outage duration is approximately **41.28 hours**.
 
 **P-value:**  
-≈ 0.027
+The resulting p-value is approximately **0.0**.
 
 **Conclusion:**  
-Since the p-value is smaller than 0.05, we reject the null hypothesis. This suggests that outages caused by severe weather tend to have longer outage durations than outages caused by other causes.
+Since the p-value is smaller than 0.05, I reject the null hypothesis. This provides evidence that outages caused by severe weather have a different average outage duration than outages caused by other causes. In the sample, severe weather outages last longer on average.
 
 ### Permutation Test Visualization
 
-![Permutation Test Distribution](images/permutation_test.png)
+<iframe
+src="assets/permutation_test.html"
+width="800"
+height="600"
+frameborder="0"
+></iframe>
 
-The histogram above shows the distribution of simulated test statistics under the null hypothesis.  
-The red vertical line represents the observed difference in mean outage duration.  
-Since the observed statistic lies far in the tail of the distribution, this leads to a very small p-value.
+The histogram above shows the permutation distribution of the test statistic under the null hypothesis. The red vertical line marks the observed difference in mean outage duration. Since the observed statistic lies far in the right tail of the null distribution, the resulting p-value is extremely small.
 
 ## Step 5: Framing a Prediction Problem
 
@@ -301,4 +329,9 @@ Specifically, the model appears to be **less accurate when predicting outages ca
 
 The visualization below shows the permutation distribution of accuracy differences, with the observed difference marked by the red line.
 
-![Permutation Test Distribution](images/fairness_test.png)
+<iframe
+src="assets/fairness_test.html"
+width="800"
+height="600"
+frameborder="0"
+></iframe>
