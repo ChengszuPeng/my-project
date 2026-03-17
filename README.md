@@ -164,3 +164,31 @@ The model will be evaluated using **F1-score**. Since long outages are less comm
 ### Time of Prediction
 
 At the time of prediction, we assume that we know information about the outage **cause, time, location, and environmental conditions**, but we do **not yet know the outage duration**. Therefore, the model will only use features that would realistically be available when the outage begins. Variables that depend on the actual outage duration will not be used as predictors.
+
+## Step 6: Baseline Model
+
+### Baseline Model
+
+For the baseline model, I use **logistic regression** to predict whether an outage lasts longer than 24 hours.
+
+The model uses two features:
+
+- **CAUSE.CATEGORY** (categorical, nominal): the cause of the outage.
+- **MONTH** (numeric / ordinal): the month in which the outage occurred.
+
+Since `CAUSE.CATEGORY` is categorical, I encode it using **OneHotEncoder** before fitting the model.  
+The feature `MONTH` is numeric and is used directly without transformation.
+
+The preprocessing and model training steps are implemented using a **scikit-learn Pipeline**, which ensures that encoding and model training are applied consistently.
+
+### Evaluation Metric
+
+Model performance is evaluated using the **F1-score**, since the dataset contains more short outages than long outages. The F1-score balances **precision and recall**, making it more suitable than accuracy for evaluating performance on an imbalanced classification problem.
+
+### Model Performance
+
+The baseline logistic regression model achieves an **F1-score of approximately 0.59** on the test set.
+
+### Interpretation
+
+This baseline model provides a simple reference point for predicting long outages. While the model captures some information from outage cause and timing, the performance suggests that additional features may help improve prediction accuracy. Therefore, more informative predictors will be explored in the final model.
