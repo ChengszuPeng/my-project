@@ -23,11 +23,11 @@ This question matters because extended outages can have serious costs and safety
 These variables will be incorporated into predictive models that will project long outages.
 
 
-## Step 2: Data Cleaning and Exploratory Data Analysis
+## Data Cleaning and Exploratory Data Analysis
 
 ### Data Cleaning
 
-Before performing the analysis, several data cleaning steps were taken. 
+Before starting the analysis, there are couple data cleaning steps were taken. 
 Missing values were handled appropriately and important columns such as 
 `OUTAGE.DURATION.HOURS` and `CUSTOMERS.AFFECTED` were converted to numeric 
 formats. Additionally, outage duration was computed from outage start and 
@@ -115,19 +115,19 @@ causes such as islanding or intentional attacks tend to result in much
 shorter outages.
 
 
-### Missingness Dependency
+## Missingness Dependency
 
-To investigate the missingness mechanism of `CUSTOMERS.AFFECTED`, I created a missingness indicator (`CUST_MISSING`) and performed permutation tests to determine whether the missingness depends on other variables.
+To investigate the missingness mechanism of `CUSTOMERS.AFFECTED`, I created a missingness indicator (CUST_MISSING) and performed permutation tests to determine whether the missingness depends on other variables.
 
-First, I tested whether the missingness of `CUSTOMERS.AFFECTED` depends on `OUTAGE.DURATION.HOURS`. The permutation test produced a very small p-value (p < 0.001), indicating that outages with longer durations are more likely to have missing customer impact information.
+First, I tested whether the missingness of `CUSTOMERS.AFFECTED` depends on OUTAGE.DURATION.HOURS. The permutation test have produced a very small p-value (p < 0.001), Export Notebook As that outages with longer durations are more likely to have missing customer impact information.
 
-Next, I tested whether the missingness depends on `CLIMATE.CATEGORY`. The permutation test produced a p-value of 0.316, which is greater than the significance level of 0.05. This suggests that there is no strong evidence that the missingness depends on climate category.
+Next, I tested whether the missingness depends on `CLIMATE.CATEGORY`. The permutation test produced a p-value about 0.3, and this is greater than the significance level of 0.05. This shows that there is no strong evidence that the missingness depends on climate category.
 
-These results suggest that the missingness of `CUSTOMERS.AFFECTED` is unlikely to be Missing Completely At Random (MCAR). Instead, it is more consistent with a Missing At Random (MAR) mechanism, where the probability of missingness depends on other observed variables such as outage duration.
+And these results show the missingness of CUSTOMERS.AFFECTED is not really going to be Missing Completely At Random (MCAR). Instead it is more likely to be a Missing At Random (MAR) mechanism, where the probability of missingness depends on other observed variables, such as outage duration.
 
 <iframe src="assets/missness.html" width="800" height="600" frameborder="0"></iframe>
 
-## Step 4: Hypothesis Testing
+## Hypothesis Testing
 
 ### Hypothesis Test
 
@@ -168,7 +168,7 @@ frameborder="0"
 
 The histogram above shows the permutation distribution of the test statistic under the null hypothesis. The red vertical line marks the observed difference in mean outage duration. Since the observed statistic lies far in the right tail of the null distribution, the resulting p-value is extremely small.
 
-## Step 5: Framing a Prediction Problem
+## Framing a Prediction Problem
 
 ### Prediction Problem
 
@@ -217,7 +217,7 @@ The baseline logistic regression model achieves an **F1-score of approximately 0
 
 This baseline model provides a simple reference point for predicting long outages. While the model captures some information from outage cause and timing, the performance suggests that additional features may help improve prediction accuracy. Therefore, more informative predictors will be explored in the final model.
 
-## Step 7: Final Model
+## Final Model
 
 ### Additional Features
 
@@ -261,7 +261,7 @@ The final model improves the F1-score from **0.593 to 0.694**, indicating that t
 
 This improvement suggests that hyperparameter tuning helps the model better capture relationships between outage causes, seasonal timing, and outage duration.
 
-## Step 8: Fairness Analysis
+## Fairness Analysis
 
 To evaluate whether the final model performs differently across outage causes, I conducted a fairness analysis comparing prediction performance for outages caused by **severe weather** versus outages caused by **other factors**.
 
