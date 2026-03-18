@@ -235,7 +235,7 @@ The model performance is evaluated using **F1-score**, since the dataset contain
 | Final Model | 0.694 |
 
 ### Interpretation
-The final model shows an improvement in the F1-score, from 0.593 to 0.694, meaning that the model has been tuned to identify extended outages better, with a favorable trade-off between precision and recall. This is because hyperparameter tuning helps the model learn better the connections between outages, seasonality, and duration.
+Interpretation The final model provides better F1-score, 0.593 to increase to 0.694, which means that the model is well adjusted to detect longer periods of outage, with a good ratio between precision and recall. This is due to the model being better adjusted to learn the relations between the outage, the season, and the duration of it through hyperparameter optimization.
 
 ## Fairness Analysis
 To evaluate whether the final model performs differently across outage causes, I conducted a fairness analysis comparing prediction performance for outages caused by **severe weather** versus outages caused by **other factors**.
