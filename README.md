@@ -108,7 +108,7 @@ causes such as islanding or intentional attacks tend to result in much
 shorter outages.
 
 
-## Missingness Dependency
+## Assessment of Missingness
 
 To examine the missingness mechanism of `CUSTOMERS.AFFECTED`, I created a missingness indicator (CUST_MISSING) and conducted permutation tests to assess its dependence on other features.
 
