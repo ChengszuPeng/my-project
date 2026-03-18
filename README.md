@@ -205,37 +205,25 @@ This baseline model provides a simple point of reference for predicting long out
 
 ## Final Model
 
-### Additional Features
-To improve upon the baseline model, I constructed a final model that incorporates additional modeling improvements.
+For the sake of enhancing the baseline model, I retained the original features, i.e., `CAUSE.CATEGORY` and `MONTH`, along with several other features that might be of assistance in predicting whether the outage will prolong as a long outage. The final model uses the features `CAUSE.CATEGORY`, `MONTH`, `U.S._STATE`, `IS_SUMMER`, `IS_WINTER`, `ANOMALY_ABS`, and `LOG_DEMAND_LOSS`.
 
-The baseline model used the following features:
-- **CAUSE.CATEGORY** (categorical, nominal): the cause of the outage.
-- **MONTH** (numeric / ordinal): the month in which the outage occurred.
+The engineered features are defined as follows:
 
-These features capture some basic information about outages, but additional modeling improvements can help the model better identify patterns associated with long outages.
+- **IS_SUMMER**: a binary flag for the outage months of June, July, or August. Seasonal variations in outages could be due to varying demand for electricity or weather influence.
 
-### Model Choice
-The resulting model consists of **logistic regression**, given that the dependent variable is a binary outcome that evaluates the continuity of the blackout beyond 24 hours. Logistic regression is a suitable modeling choice because it is a good compromise between creating an interpretable probability distribution and allowing the use of discretized categorical predictors.
+- **IS_WINTER**: a binary variable for December, January, and February power outages. Winter storms and cold can increase the duration of outages.
 
-### Hyperparameter Tuning
-To improve the model, I tuned the **regularization strength parameter `C`** of the logistic regression model.
-Hyperparameter tuning was performed using **GridSearchCV** with 5-fold cross-validation and **F1-score** as the evaluation metric.
+- **ANOMALY_ABS**: the absolute level of `ANOMALY.LEVEL` as an indication of the intensity level of weather extremes.
 
-The following candidate values were tested:
-C = [0.01, 0.1, 1, 10, 100]
-The best performing hyperparameter value found was:
-C = 100
+- **LOG_DEMAND_LOSS**: a log transform of the `DEMAND.LOSS.MW` variable created to correct for skewness in the distribution of demand loss values.
 
-### Model Performance
-The model performance is evaluated using **F1-score**, since the dataset contains more short outages than long outages and F1-score balances precision and recall.
+I also included `U.S._STATE` as a categorical feature, since outage duration may vary across states due to differences in infrastructure, climate, and energy systems.
 
-| Model | F1 Score |
-|------|------|
-| Baseline Model | 0.593 |
-| Final Model | 0.694 |
+For preprocessing, I used a `ColumnTransformer` to implement separate preprocessing for categorical and numeric features. For categorical features (`CAUSE.CATEGORY`, `U.S._STATE`), I imputed using the mode and performed one-hot encoding. For numeric features (`MONTH`, `IS_SUMMER`, `IS_WINTER`, `ANOMALY_ABS`, `LOG_DEMAND_LOSS`), I imputed using the median.
 
-### Interpretation
-Interpretation The final model provides better F1-score, 0.593 to increase to 0.694, which means that the model is well adjusted to detect longer periods of outage, with a good ratio between precision and recall. This is due to the model being better adjusted to learn the relations between the outage, the season, and the duration of it through hyperparameter optimization.
+The final model that I included in the model-building pipeline is a logistic regression classifier. I fine-tuned the regularization hyperparameter `C` using `GridSearchCV` with 5-fold cross-validation and selected the final model based on the **F1-score** metric.
+
+Including seasonal factors, weather severity, electricity demand loss, and geographical information makes the final model more relevant to the problem and its potential influencing factors. Hence, it improves the modeling compared to the first version.
 
 ## Fairness Analysis
 To evaluate whether the final model performs differently across outage causes, I conducted a fairness analysis comparing prediction performance for outages caused by **severe weather** versus outages caused by **other factors**.
