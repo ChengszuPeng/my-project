@@ -206,16 +206,13 @@ The feature `MONTH` is numeric and is used directly without transformation.
 The preprocessing and model training steps are implemented using a **scikit-learn Pipeline**, which ensures that encoding and model training are applied consistently.
 
 ### Evaluation Metric
-
-Model performance is evaluated using the **F1-score**, since the dataset contains more short outages than long outages. The F1-score balances **precision and recall**, making it more suitable than accuracy for evaluating performance on an imbalanced classification problem.
+The model is evaluated according to the F1-score because we have a lot of short outages and only a few long outages. The F1 score balances precision and recall and is better for evaluation than accuracy in the case of the imbalanced dataset.
 
 ### Model Performance
-
-The baseline logistic regression model achieves an **F1-score of approximately 0.59** on the test set.
+The baseline logistic regression model has a test **F1 score** of around 0.59.
 
 ### Interpretation
-
-This baseline model provides a simple reference point for predicting long outages. While the model captures some information from outage cause and timing, the performance suggests that additional features may help improve prediction accuracy. Therefore, more informative predictors will be explored in the final model.
+This baseline model provides a simple point of reference for predicting long outages. While the model uses information about the cause of outages and when they occurred, this performance suggests that other variables may improve predictions. Thus, more informative variables will be tested in the final model.
 
 ## Final Model
 
@@ -231,14 +228,11 @@ These features capture some basic information about outages, but additional mode
 
 ### Model Choice
 
-The final model uses **logistic regression**, since the prediction task is a **binary classification problem** where the goal is to predict whether an outage lasts longer than 24 hours.
-
-Logistic regression is appropriate for this task because it provides an interpretable probabilistic model while still being able to incorporate encoded categorical variables.
+The resulting model consists of **logistic regression**, given that the dependent variable is a binary outcome that evaluates the continuity of the blackout beyond 24 hours. Logistic regression is a suitable modeling choice because it is a good compromise between creating an interpretable probability distribution and allowing the use of discretized categorical predictors.
 
 ### Hyperparameter Tuning
 
 To improve the model, I tuned the **regularization strength parameter `C`** of the logistic regression model.
-
 Hyperparameter tuning was performed using **GridSearchCV** with 5-fold cross-validation and **F1-score** as the evaluation metric.
 
 The following candidate values were tested:
@@ -247,7 +241,6 @@ The best performing hyperparameter value found was:
 C = 100
 
 ### Model Performance
-
 The model performance is evaluated using **F1-score**, since the dataset contains more short outages than long outages and F1-score balances precision and recall.
 
 | Model | F1 Score |
@@ -257,9 +250,7 @@ The model performance is evaluated using **F1-score**, since the dataset contain
 
 ### Interpretation
 
-The final model improves the F1-score from **0.593 to 0.694**, indicating that the tuned model is better at identifying long outages while maintaining a balance between precision and recall.
-
-This improvement suggests that hyperparameter tuning helps the model better capture relationships between outage causes, seasonal timing, and outage duration.
+The final model shows an improvement in the F1-score, from 0.593 to 0.694, meaning that the model has been tuned to identify extended outages better, with a favorable trade-off between precision and recall. This is because hyperparameter tuning helps the model learn better the connections between outages, seasonality, and duration.
 
 ## Fairness Analysis
 
@@ -319,11 +310,8 @@ Since this p-value is far below the typical significance level of **α = 0.05**,
 
 ### Conclusion
 
-The results suggest that the model performs significantly differently for outages caused by severe weather compared to outages caused by other causes.
+Results The permutation test yielded a p value of 0.0. Because this p-value is much lower than the typical threshold for significance (p = 0.05), we can reject the null hypothesis. Conclusion These results indicate that the model’s performance differs significantly between outages caused by severe weather and outages caused by other factors. Specifically, the model seems to be less accurate in predicting outages due to severe weather, implying that there may be fairness issues in how these models are applied to predict different causes of outages. In the figure below, we present the distribution of permutation test accuracy differences, with the actual observed difference depicted as a red line.
 
-Specifically, the model appears to be **less accurate when predicting outages caused by severe weather**, indicating that the model may have fairness limitations across different outage causes.
-
-The visualization below shows the permutation distribution of accuracy differences, with the observed difference marked by the red line.
 
 <iframe
 src="assets/fairness_test.html"
