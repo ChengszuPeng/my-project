@@ -1,19 +1,16 @@
 # Understanding Power Outage Severity in the United States
 
 ## Introduction
-
 Power outage is a major threat to the infrastructure systems of the world. Power outage can affect the transport system, communication system, medical system, business sector and normal daily life of people.
 
 I do an analysis in the current project on the power outages events that occurred at a large scale in the US. The dataset that I carryout analysis on has **1534 rows**, where each row represents a single outage event.
 
 The central question of this project is:
-
 **Can we predict whether a power outage will become a long outage based on information about the outage’s cause, time, location, and impact?**
 
 This question matters because extended outages can have serious costs and safety impacts to the affected areas.
 
 ### Relevant Columns
-
 - **CAUSE.CATEGORY** – reason for the outage (weather, technical problems, etc.)
 - **MONTH** – month when the outage occurred
 - **U.S._STATE** – state where the outage occurred
@@ -26,7 +23,6 @@ These variables will be incorporated into predictive models that will project lo
 ## Data Cleaning and Exploratory Data Analysis
 
 ### Data Cleaning
-
 Before starting the analysis, there are couple data cleaning steps were taken. 
 Missing values were handled appropriately and important columns such as 
 `OUTAGE.DURATION.HOURS` and `CUSTOMERS.AFFECTED` were converted to numeric 
@@ -36,7 +32,6 @@ restoration times when necessary.
 ---
 
 ### Univariate Analysis
-
 The following plot shows the distribution of outage duration in hours.
 
 <iframe
@@ -66,7 +61,6 @@ large populations.
 ---
 
 ### Bivariate Analysis
-
 The following plot examines the relationship between outage duration and 
 climate category.
 
@@ -95,7 +89,6 @@ appear to be associated with longer outage durations compared to other causes.
 ---
 
 ### Interesting Aggregates
-
 The following table summarizes the **average outage duration grouped by 
 cause category**.
 
@@ -117,20 +110,19 @@ shorter outages.
 
 ## Missingness Dependency
 
-To investigate the missingness mechanism of `CUSTOMERS.AFFECTED`, I created a missingness indicator (CUST_MISSING) and performed permutation tests to determine whether the missingness depends on other variables.
+To examine the missingness mechanism of `CUSTOMERS.AFFECTED`, I created a missingness indicator (CUST_MISSING) and conducted permutation tests to assess its dependence on other features.
 
-First, I tested whether the missingness of `CUSTOMERS.AFFECTED` depends on OUTAGE.DURATION.HOURS. The permutation test have produced a very small p-value (p < 0.001), Export Notebook As that outages with longer durations are more likely to have missing customer impact information.
+Firstly, I tested the null hypothesis that the missingness of `CUSTOMERS.AFFECTED` is independent of `OUTAGE.DURATION.HOURS`. The p from the permutation test was small (p 0.001), and that can be interpreted as missingness for customers is more likely for longer duration outages.
 
-Next, I tested whether the missingness depends on `CLIMATE.CATEGORY`. The permutation test produced a p-value about 0.3, and this is greater than the significance level of 0.05. This shows that there is no strong evidence that the missingness depends on climate category.
+Following this, I verified whether the missingness was conditional on five distinct `CLIMATE.CATEGORY` groups. The permutation test demonstrated a p-value around 0.3, thus giving no evidence of a statistical difference among missing values between climate categories. That is, there is no support for the contention that missingness is dependent on climate category.
 
-And these results show the missingness of CUSTOMERS.AFFECTED is not really going to be Missing Completely At Random (MCAR). Instead it is more likely to be a Missing At Random (MAR) mechanism, where the probability of missingness depends on other observed variables, such as outage duration.
+These findings indicate that the missingness of `CUSTOMERS.AFFECTED` is not Missing Completely At Random (MCAR) but rather Missing At Random, where its mechanism is related to other variables like outage length, rather than based solely on the missingness pattern of CUSTOMERS.AFFECTED.
 
 <iframe src="assets/missness.html" width="800" height="600" frameborder="0"></iframe>
 
 ## Hypothesis Testing
 
 ### Hypothesis Test
-
 I test whether outages caused by severe weather tend to have different average outage durations than outages caused by other causes.
 
 **Null Hypothesis (H₀):**  
@@ -182,17 +174,14 @@ This is a **binary classification problem**, where the response variable is **`L
 This threshold was chosen because outages lasting more than a full day can cause significant disruption to infrastructure systems, businesses, and daily life.
 
 ### Evaluation Metric
-
 The model will be evaluated using the **F1-score**. Since shorter outages are mub common than long outages, the dataset is somewhat imbalanced. Accuracy alone could be misleading, as a model that always predicts short outages might still have a high accuracy. The F1-score are more average on precision and recall, making it a more appropriate metric for evaluating performance on this classification problem.
 
 ### Time of Prediction
-
 At the time of prediction, we will assume that we know the information about the outage cause, time, location, and environmental conditions, and we do not know about the outage duration yet. Therefore, the model will only be using the features that would be objective and be available when the outage begins. Variables that depend on the actual outage duration will not be used as predictors.
 
-## Step 6: Baseline Model
+## Baseline Model
 
 ### Baseline Model
-
 For the baseline model, I use **logistic regression** to predict whether an outage lasts longer than 24 hours.
 
 The model uses two features:
@@ -217,7 +206,6 @@ This baseline model provides a simple point of reference for predicting long out
 ## Final Model
 
 ### Additional Features
-
 To improve upon the baseline model, I constructed a final model that incorporates additional modeling improvements.
 
 The baseline model used the following features:
@@ -227,11 +215,9 @@ The baseline model used the following features:
 These features capture some basic information about outages, but additional modeling improvements can help the model better identify patterns associated with long outages.
 
 ### Model Choice
-
 The resulting model consists of **logistic regression**, given that the dependent variable is a binary outcome that evaluates the continuity of the blackout beyond 24 hours. Logistic regression is a suitable modeling choice because it is a good compromise between creating an interpretable probability distribution and allowing the use of discretized categorical predictors.
 
 ### Hyperparameter Tuning
-
 To improve the model, I tuned the **regularization strength parameter `C`** of the logistic regression model.
 Hyperparameter tuning was performed using **GridSearchCV** with 5-fold cross-validation and **F1-score** as the evaluation metric.
 
@@ -249,15 +235,12 @@ The model performance is evaluated using **F1-score**, since the dataset contain
 | Final Model | 0.694 |
 
 ### Interpretation
-
 The final model shows an improvement in the F1-score, from 0.593 to 0.694, meaning that the model has been tuned to identify extended outages better, with a favorable trade-off between precision and recall. This is because hyperparameter tuning helps the model learn better the connections between outages, seasonality, and duration.
 
 ## Fairness Analysis
-
 To evaluate whether the final model performs differently across outage causes, I conducted a fairness analysis comparing prediction performance for outages caused by **severe weather** versus outages caused by **other factors**.
 
 ### Groups
-
 The two groups were defined as:
 
 - **Group X:** outages caused by **severe weather**
@@ -266,11 +249,9 @@ The two groups were defined as:
 These groups were created using the `CAUSE.CATEGORY` column.
 
 ### Evaluation Metric
-
 The evaluation metric used for the fairness analysis is **classification accuracy**, which measures the proportion of correct predictions.
 
 ### Observed Difference
-
 The observed accuracies were:
 
 - Accuracy for **severe weather outages:** 0.718  
@@ -291,7 +272,6 @@ The model performs equally well for severe weather outages and other outages. An
 The model performs differently for severe weather outages compared to other outages.
 
 ### Permutation Test
-
 To test this hypothesis, I performed a **permutation test with 1000 simulations**.
 
 During each simulation:
@@ -303,15 +283,12 @@ During each simulation:
 The p-value was computed as the proportion of simulated differences with magnitude greater than or equal to the observed difference.
 
 ### Results
-
 The permutation test produced a **p-value ≈ 0.0**.
 
 Since this p-value is far below the typical significance level of **α = 0.05**, we reject the null hypothesis.
 
 ### Conclusion
-
-Results The permutation test yielded a p value of 0.0. Because this p-value is much lower than the typical threshold for significance (p = 0.05), we can reject the null hypothesis. Conclusion These results indicate that the model’s performance differs significantly between outages caused by severe weather and outages caused by other factors. Specifically, the model seems to be less accurate in predicting outages due to severe weather, implying that there may be fairness issues in how these models are applied to predict different causes of outages. In the figure below, we present the distribution of permutation test accuracy differences, with the actual observed difference depicted as a red line.
-
+Results The permutation test produced a p value of 0.0. Since this p-value is much smaller than the usually accepted level of significance (0.05), we reject the null hypothesis. Conclusion This means that there are significant differences in the accuracy of the model for outages caused by severe weather and outages for other reasons. That is, the model appears to be less accurate as an outage prediction for severe weather conditions. Therefore, there are likely fairness implications for the use of such models for predicting different kinds of outages. In the figure below, we present the density of the permutation test accuracy differences, with the actual observed difference shown as the red line.
 
 <iframe
 src="assets/fairness_test.html"
