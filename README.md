@@ -225,6 +225,8 @@ The final model that I included in the model-building pipeline is a logistic reg
 
 Including seasonal factors, weather severity, electricity demand loss, and geographical information makes the final model more relevant to the problem and its potential influencing factors. Hence, it improves the modeling compared to the first version.
 
+The baseline model achieved an F1-score of **0.593**, while the final model achieved an F1-score of **0.694** on the test set. This improvement shows that incorporating additional engineered features and tuning the logistic regression regularization parameter helped the model better identify long outages.
+
 ## Fairness Analysis
 To evaluate whether the final model performs differently across outage causes, I conducted a fairness analysis comparing prediction performance for outages caused by **severe weather** versus outages caused by **other factors**.
 
